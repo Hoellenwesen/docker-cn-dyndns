@@ -7,16 +7,10 @@ ENV DNS_API_PASS mypass
 ENV BUILD_PACKAGES \
     python3 \
     py3-pip \
-    py3-virtualenv \
     openssl \
-    ca-certificates \
-    sshpass \
-    openssh-client \
-    rsync \
-    git
+    ca-certificates
 
-RUN set -x && \
-    echo "==> Adding build-dependencies..."  && \
+RUN echo "==> Adding build-dependencies..."  && \
     apk --no-cache add --virtual build-dependencies \
         python3-dev \
         libffi-dev \
@@ -42,14 +36,14 @@ RUN set -x && \
 
 RUN mkdir /cron-tasks
 
-echo "==> Adding DynDNS Changer..."
+RUN echo "==> Adding DynDNS Changer..."
 ADD dyndns_changer /cron-tasks/dyndns_changer
 
-echo "==> Adding Crontab..."
+RUN echo "==> Adding Crontab..."
 ADD crontab.txt /crontab.txt
 RUN /usr/bin/crontab /crontab.txt
 
-echo "==> Adding additional scripts..."
+RUN echo "==> Adding additional scripts..."
 COPY entry.sh /entry.sh
 RUN chmod +x /entry.sh
 
