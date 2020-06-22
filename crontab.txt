@@ -1,0 +1,1 @@
+*/20 * * * * cd /cron-tasks/dyndns_changer && /usr/bin/python3 dyndns.py >> /var/log/dyndns_changes.log 2>&1
