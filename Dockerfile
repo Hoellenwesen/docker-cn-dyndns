@@ -1,10 +1,10 @@
 FROM alpine:3.12
 LABEL maintainer="Hoellenwesen"
 
-ENV DNS_API_USER myuser
-ENV DNS_API_PASS mypass
-ENV DNS_ZONE example.com
-ENV DNS_SUB1 sub1
+ENV DNS_API_USER "myuser"
+ENV DNS_API_PASS "mypass"
+ENV DNS_ZONE "example.com"
+ENV DNS_SUB1 "sub1"
 ENV DNS_SUB2 ""
 ENV DNS_SUB3 ""
 ENV DNS_SUB4 ""
@@ -42,10 +42,10 @@ ADD dyndns /dyndns
 
 RUN echo "==> Adding Crontab..."
 ADD crontab.txt /crontab.txt
-RUN /usr/bin/crontab /crontab.txt
 
 RUN echo "==> Adding additional scripts..."
 COPY entry.sh /entry.sh
 RUN chmod +x /entry.sh
 
 CMD ["/entry.sh"]
+RUN /usr/bin/crontab /crontab.txt
