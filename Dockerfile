@@ -42,10 +42,10 @@ ADD dyndns /dyndns
 
 RUN echo "==> Adding Crontab..."
 ADD crontab.txt /crontab.txt
+RUN /usr/bin/crontab /crontab.txt
 
 RUN echo "==> Adding additional scripts..."
 COPY entry.sh /entry.sh
 RUN chmod +x /entry.sh
 
 CMD ["/entry.sh"]
-RUN /usr/bin/crontab /crontab.txt
