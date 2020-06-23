@@ -3,6 +3,12 @@ LABEL maintainer="Hoellenwesen"
 
 ENV DNS_API_USER myuser
 ENV DNS_API_PASS mypass
+ENV DNS_ZONE example.com
+ENV DNS_SUB1 sub1
+ENV DNS_SUB2 ""
+ENV DNS_SUB3 ""
+ENV DNS_SUB4 ""
+ENV DNS_CRONTAB "*/20 * * * *"
 
 ENV BUILD_PACKAGES \
     python3 \
@@ -16,10 +22,8 @@ RUN echo "==> Adding build-dependencies..."  && \
         libffi-dev \
         openssl-dev \
         build-base && \
-
     echo "==> Upgrading apk and system..."  && \
     apk update && apk upgrade && \
-
     echo "==> Adding Python runtime..."  && \
     apk add --no-cache ${BUILD_PACKAGES} && \
     pip3 install --upgrade pip \
@@ -29,15 +33,12 @@ RUN echo "==> Adding build-dependencies..."  && \
         certifi \
         idna \
         requests && \
-
     echo "==> Cleaning up..."  && \
     apk del build-dependencies && \
     rm -rf /var/cache/apk/*
 
-RUN mkdir /cron-tasks
-
 RUN echo "==> Adding DynDNS Changer..."
-ADD dyndns_changer /cron-tasks/dyndns_changer
+ADD dyndns /dyndns
 
 RUN echo "==> Adding Crontab..."
 ADD crontab.txt /crontab.txt
