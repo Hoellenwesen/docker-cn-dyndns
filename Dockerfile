@@ -8,7 +8,6 @@ ENV DNS_SUB1 "sub1"
 ENV DNS_SUB2 ""
 ENV DNS_SUB3 ""
 ENV DNS_SUB4 ""
-ENV DNS_CRONTAB "*/20 * * * *"
 
 ENV BUILD_PACKAGES \
     python3 \

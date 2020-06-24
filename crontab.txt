@@ -1,1 +1,1 @@
-{{DNS_CRONTAB}} cd /dyndns && /usr/bin/python3 dyndns.py >> /var/log/dyndns_changes.log 2>&1
+*/20 * * * * cd /dyndns && /usr/bin/python3 dyndns.py >> /var/log/dyndns_changes.log 2>&1
