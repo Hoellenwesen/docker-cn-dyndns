@@ -20,7 +20,7 @@ To use this DynDNS changer you need a domain at [Core-Networks](https://www.core
 #### Zone and subdomain
 The ZONE is your registered domain (e.g. example.com) and `SUB1 - SUB4` are the subdomains you want to redirect (e.g. games). **DO NOT** include the base domain in the SUB variables!
 
-Currently it is pssible to define four subdomains, because it is required in my environment. If you need more fell free to Fork the project on GitHub or send me a message so i can modify the container. 
+Currently it is pssible to define four subdomains, because it is required in my environment. If you need more, feel free to Fork the project on GitHub or send me a message so i can modify the container. 
 
 **The container will not start without the API_USER, API_PASS, ZONE and SUB1 variables.**
 ### Using Docker Compose
