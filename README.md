@@ -14,6 +14,7 @@ docker run -d -e API_USER='username' -e API_PASS='password' -e ZONE='example.com
 - SUB2 (optional)
 - SUB3 (optional)
 - SUB4 (optional)
+
 #### API user and password
 To use this DynDNS changer you need a domain at [Core-Networks](https://www.core-networks.de) and you have to create an API user and password for their DNS API.
 #### Zone and subdomain
@@ -24,7 +25,7 @@ Currently it is pssible to define four subdomains, because it is required in my 
 **The container will not start without the API_USER, API_PASS, ZONE and SUB1 variables.**
 ### Using Docker Compose
 Instead of remembering and typing long chains of parameters and docker options you can create a docker-compose.yml file. Simply run the command `docker-compose up` to bring up the container and then use the command `docker-compose down` to stop and get rid of the container.
-### Example
+#### Example
 Save this example in a file named `docker-compose.yml`
 ```
 version: '3.3'
