@@ -1,5 +1,5 @@
 FROM alpine:3.12
-LABEL maintainer="Hoellenwesen"
+LABEL maintainer="Sebastian Weyer"
 
 ENV API_USER ""
 ENV API_PASS ""
