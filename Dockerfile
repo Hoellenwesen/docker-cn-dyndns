@@ -1,13 +1,13 @@
 FROM alpine:3.12
 LABEL maintainer="Hoellenwesen"
 
-ENV DNS_API_USER "myuser"
-ENV DNS_API_PASS "mypass"
-ENV DNS_ZONE "example.com"
-ENV DNS_SUB1 "sub1"
-ENV DNS_SUB2 ""
-ENV DNS_SUB3 ""
-ENV DNS_SUB4 ""
+ENV API_USER "myuser"
+ENV API_PASS "mypass"
+ENV ZONE "example.com"
+ENV SUB1 "sub1"
+ENV SUB2 ""
+ENV SUB3 ""
+ENV SUB4 ""
 
 ENV BUILD_PACKAGES \
     python3 \
