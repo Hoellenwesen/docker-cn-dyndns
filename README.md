@@ -1,5 +1,7 @@
 # docker-dyndns-cn
-This docker image provides a DynDNS changer using the CoreNetworks API.
+This docker image provides a DynDNS client using the CoreNetworks API which updates a domain with your current public IP address. IPv4 and IPv6 is supported.
+
+The container checks periodicly (currently every 20 minutes via cronjob) for a change of your public IP address and updates it if necessary.
 
 ### Quickstart
 ```
