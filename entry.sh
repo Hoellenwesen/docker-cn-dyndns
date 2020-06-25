@@ -1,17 +1,34 @@
 #!/bin/sh
 
-# Add credentials to DynDNS Changer config
-sed -i "s/{{DNS_API_USER}}/$DNS_API_USER/g" /dyndns/config.ini
-sed -i "s/{{DNS_API_PASS}}/$DNS_API_PASS/g" /dyndns/config.ini
-sed -i "s/{{DNS_ZONE}}/$DNS_ZONE/g" /dyndns/config.ini
-#sed -i "s/{{DNS_SUB1}}/$DNS_SUB1/g" /dyndns/config.ini
-#sed -i "s/{{DNS_SUB2}}/$DNS_SUB2/g" /dyndns/config.ini
-#sed -i "s/{{DNS_SUB3}}/$DNS_SUB3/g" /dyndns/config.ini
-#sed -i "s/{{DNS_SUB4}}/$DNS_SUB4/g" /dyndns/config.ini
+# Add variables to DynDNS config
+if [ -z "$API_USER" ]
+then
+      echo "Empty API_USER. Please set your CoreNetworks API user."
+      exit 10
+else
+      sed -i "s/{{API_USER}}/$API_USER/g" /dyndns/config.ini
+fi
+
+if [ -z "$API_PASS" ]
+then
+      echo "Empty API_PASS. Please set your CoreNetworks API password."
+      exit 11
+else
+      sed -i "s/{{API_PASS}}/$API_PASS/g" /dyndns/config.ini
+fi
+
+if [ -z "$ZONE" ]
+then
+      echo "Empty ZONE. Please define your DNS zone (e.g. example.com)"
+      exit 12
+else
+      sed -i "s/{{ZONE}}/$ZONE/g" /dyndns/config.ini
+fi
 
 if [[ -z $SUB1 ]];
 then
-	exit 10
+	echo "Empty SUB1. Please define at least one subdomain"
+    exit 13
 else
     sed -i "s/{{SUB1}}/'$SUB1'/g" /dyndns/config.ini
 fi

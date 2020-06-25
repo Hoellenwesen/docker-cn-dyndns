@@ -1,10 +1,10 @@
 FROM alpine:3.12
 LABEL maintainer="Hoellenwesen"
 
-ENV API_USER "myuser"
-ENV API_PASS "mypass"
-ENV ZONE "example.com"
-ENV SUB1 "sub1"
+ENV API_USER ""
+ENV API_PASS ""
+ENV ZONE ""
+ENV SUB1 ""
 ENV SUB2 ""
 ENV SUB3 ""
 ENV SUB4 ""
