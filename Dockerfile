@@ -8,12 +8,14 @@ ENV SUB1 ""
 ENV SUB2 ""
 ENV SUB3 ""
 ENV SUB4 ""
+ENV TZ ""
 
 ENV BUILD_PACKAGES \
     python3 \
     py3-pip \
     openssl \
-    ca-certificates
+    ca-certificates \
+    tzdata
 
 RUN echo "==> Adding build-dependencies..."  && \
     apk --no-cache add --virtual build-dependencies \

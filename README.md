@@ -5,12 +5,13 @@ The container checks periodicly (currently every 20 minutes via cronjob) for a c
 
 ### Quickstart
 ```
-docker run -d -e API_USER='username' -e API_PASS='password' -e ZONE='example.com' -e SUB1='subdomain' sweyer/docker-dyndns-cn:latest
+docker run -d -e API_USER='username' -e API_PASS='password' -e TZ=Europe/Berlin -e ZONE=example.com -e SUB1=subdomain sweyer/docker-dyndns-cn:latest
 ```
 
 ### Environment parameters
 - API_USER (**required**)
 - API_PASS (**required**)
+- TZ (optional)
 - ZONE (**required**)
 - SUB1 (**required**)
 - SUB2 (optional)
@@ -19,6 +20,8 @@ docker run -d -e API_USER='username' -e API_PASS='password' -e ZONE='example.com
 
 #### API user and password
 To use this DynDNS changer you need a domain at [Core-Networks](https://www.core-networks.de) and you have to create an API user and password for their DNS API.
+#### Timezone setting
+To set the system time to your desired you have to change the `TZ` variable to set your time zone e.g. Europe/Berlin. Without this variable the default system time is UTC.
 #### Zone and subdomain
 The ZONE is your registered domain (e.g. example.com) and `SUB1 - SUB4` are the subdomains you want to redirect (e.g. games). **DO NOT** include the base domain in the SUB variables!
 
@@ -34,11 +37,12 @@ version: '3.3'
 services:
   docker-dyndns-cn:
     image: 'sweyer/docker-dyndns-cn:latest'
-    container-name: 'dyndns-changer'
+    container_name: 'dyndns-changer'
     restart: always
     environment:
       - API_USER='username'
       - API_PASS='password'
-      - ZONE='example.com'
-      - SUB1='subdomain'
+      - TZ=Europe/Berlin
+      - ZONE=example.com
+      - SUB1=subdomain
 ```

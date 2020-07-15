@@ -7,5 +7,6 @@ services:
     environment:
       - API_USER='username'
       - API_PASS='password'
-      - ZONE='example.com'
-      - SUB1='subdomain'
+      - TZ=Europe/Berlin
+      - ZONE=example.com
+      - SUB1=subdomain
