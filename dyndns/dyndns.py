@@ -24,7 +24,7 @@ if not os.path.exists('dyndns_ipv6.txt'):
 
 # Get current IPs
 ipv4 = requests.get('https://api.ipify.org').text
-ipv6 = requests.get('https://api6.ipify.org').text
+ipv6 = requests.get('https://api64.ipify.org').text
 
 
 def get_api_token():

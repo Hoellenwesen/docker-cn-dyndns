@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:latest
 LABEL maintainer="Sebastian Weyer"
 
 ENV API_USER ""
