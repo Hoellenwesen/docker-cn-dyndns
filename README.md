@@ -5,7 +5,7 @@ The container checks periodicly (currently every 20 minutes via cronjob) for a c
 
 ### Quickstart
 ```
-docker run -d -e API_USER='username' -e API_PASS='password' -e TZ=Europe/Berlin -e ZONE=example.com -e SUB1=subdomain sweyer/docker-dyndns-cn:latest
+docker run -d -e API_USER='username' -e API_PASS='password' -e TZ=Europe/Berlin -e ZONE=example.com -e SUB1=subdomain sweyer/docker-dyndns-cn:amd64
 ```
 
 ### Environment parameters
@@ -17,6 +17,9 @@ docker run -d -e API_USER='username' -e API_PASS='password' -e TZ=Europe/Berlin 
 - SUB2 (optional)
 - SUB3 (optional)
 - SUB4 (optional)
+
+### OS Arch
+The container is available for amd64 and arm64 os architecture.
 
 #### API user and password
 To use this DynDNS changer you need a domain at [Core-Networks](https://www.core-networks.de) and you have to create an API user and password for their DNS API.
@@ -36,7 +39,7 @@ Save this example in a file named `docker-compose.yml`
 version: '3.3'
 services:
   docker-dyndns-cn:
-    image: 'sweyer/docker-dyndns-cn:latest'
+    image: 'sweyer/docker-dyndns-cn:amd64'
     container_name: 'dyndns-changer'
     restart: always
     environment:
