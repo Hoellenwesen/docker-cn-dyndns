@@ -4,6 +4,7 @@ import time
 import configparser
 import ast
 import os
+import sys
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -32,31 +33,14 @@ def get_api_token():
     headers = {'Content-type': 'application/json'}
     api_endpoint = '{0}/auth/token'.format(api_base_url)
     data = {"login": api_user, "password": api_pass}
-
     response = requests.post(api_endpoint, json=data, headers=headers)
-
-    if response.status_code >= 500:
-        print('[!] [{0}] Server Error'.format(response.status_code))
-        return None
-    elif response.status_code == 404:
-        print('[!] [{0}] URL not found: [{1}]'.format(response.status_code,api_url))
-        return None  
-    elif response.status_code == 401:
-        print('[!] [{0}] Authentication Failed'.format(response.status_code))
-        return None
-    elif response.status_code == 400:
-        print('[!] [{0}] Bad Request'.format(response.status_code))
-        return None
-    elif response.status_code >= 300:
-        print('[!] [{0}] Unexpected Redirect'.format(response.status_code))
-        return None
-    elif response.status_code == 200:
+    if response.status_code == 200:
         result = response.json()
         token = result['token']
         return token
     else:
-        print('[?] Unexpected Error: [HTTP {0}]: Content: {1}'.format(response.status_code, response.content))
-    return None
+        print('[!] Error: [HTTP {0}], Content: {1}, Endpoint: {2}'.format(response.status_code, response.content, api_endpoint))
+        return None
 
 
 def check_ip_type(ip):
@@ -78,6 +62,8 @@ def delete_record(token):
     for i in dyn_dns_subdomain:
         data = {"name": i}
         response = requests.post(api_endpoint, json=data, headers=headers)
+        if ((response.status_code != 200) and (response.status_code != 204)):
+            print('[!] Error: [HTTP {0}], Content: {1}, Endpoint: {2}'.format(response.status_code, response.content, api_endpoint))
 
 
 def dns_commit(token):
@@ -86,6 +72,8 @@ def dns_commit(token):
     headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer {0}'.format(api_token)}
     api_endpoint = '{0}/dnszones/{1}/records/commit'.format(api_base_url, dyn_dns_zone)
     response = requests.post(api_endpoint, headers=headers)
+    if ((response.status_code != 200) and (response.status_code != 204)):
+        print('[!] Error: [HTTP {0}], Content: {1}, Endpoint: {2}'.format(response.status_code, response.content, api_endpoint))
 
 
 def create_record(ip):
@@ -104,35 +92,46 @@ def create_record(ip):
         for i in dyn_dns_subdomain:
             data = {"name": i, "ttl": 1800, "type": ip_type, "data": ip}
             response = requests.post(api_endpoint, json=data, headers=headers)
-            print('{0} Subdomain {1} with type {2} and IP {3} updated'.format(log_time, i, ip_type, ip))
-        dns_commit(api_token)
+            if ((response.status_code == 200) or (response.status_code == 204)):
+                print('{0} Subdomain {1} with type {2} and IP {3} updated'.format(log_time, i, ip_type, ip))
+                dns_commit(api_token)
+            else:
+                print('[!] Error: [HTTP {0}], Content: {1}, Endpoint: {2}'.format(response.status_code, response.content, api_endpoint))
     else:
-        print('{0} [!] Request Failed'.format(log_time))
+        print('{0} [!] No API token'.format(log_time))
 
 
-# Check current IPv4 address
-if check_ip_type(ipv6) == 0:
-    with open('dyndns_ipv4.txt', 'r') as fv4:
-        if ipv4 in fv4.read():
-            print('{0} No IPv4 changes'.format(log_time))
-        else:
-            fv4 = open("dyndns_ipv4.txt", "w")
-            fv4.write(ipv4)
-            fv4.close()
-            create_record(ipv4)
+# Change IPv4 address
+api_token = get_api_token()
+if api_token is not None:
+    if check_ip_type(ipv4) == 0:
+        with open('dyndns_ipv4.txt', 'r') as fv4:
+            if ipv4 in fv4.read():
+                print('{0} No IPv4 changes'.format(log_time))
+            else:
+                fv4 = open("dyndns_ipv4.txt", "w")
+                fv4.write(ipv4)
+                fv4.close()
+                create_record(ipv4)
+    else:
+        print('{0} No IPv4 address available'.format(log_time))
 else:
-    print('{0} No IPv4 address available'.format(log_time))
+    print('{0} [!] IPv4 request failed'.format(log_time))
 
-# Check current IPv6 address
-if check_ip_type(ipv6) == 1:
-    with open('dyndns_ipv6.txt', 'r') as fv6:
-        if ipv6 in fv6.read():
-            print('{0} No IPv6 changes'.format(log_time))
-        else:
-            fv6 = open("dyndns_ipv6.txt", "w")
-            fv6.write(ipv6)
-            fv6.close()
-            create_record(ipv6)
+# Change IPv6 address
+api_token = get_api_token()
+if api_token is not None:
+    if check_ip_type(ipv6) == 1:
+        with open('dyndns_ipv6.txt', 'r') as fv6:
+            if ipv6 in fv6.read():
+                print('{0} No IPv6 changes'.format(log_time))
+            else:
+                fv6 = open("dyndns_ipv6.txt", "w")
+                fv6.write(ipv6)
+                fv6.close()
+                create_record(ipv6)
+    else:
+        print('{0} No IPv6 address available'.format(log_time))
 else:
-    print('{0} No IPv6 address available'.format(log_time))
+    print('{0} [!] IPv6 request failed'.format(log_time))
 

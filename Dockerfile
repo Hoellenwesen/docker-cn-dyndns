@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM python:alpine
 LABEL maintainer="Sebastian Weyer"
 
 ENV API_USER ""
@@ -10,33 +10,8 @@ ENV SUB3 ""
 ENV SUB4 ""
 ENV TZ ""
 
-ENV BUILD_PACKAGES \
-    python3 \
-    py3-pip \
-    openssl \
-    ca-certificates \
-    tzdata
-
-RUN echo "==> Adding build-dependencies..."  && \
-    apk --no-cache add --virtual build-dependencies \
-        python3-dev \
-        libffi-dev \
-        openssl-dev \
-        build-base && \
-    echo "==> Upgrading apk and system..."  && \
-    apk update && apk upgrade && \
-    echo "==> Adding Python runtime..."  && \
-    apk add --no-cache ${BUILD_PACKAGES} && \
-    pip3 install --upgrade pip \
-        setuptools \
-        wheel \
-        urllib3 \
-        certifi \
-        idna \
-        requests && \
-    echo "==> Cleaning up..."  && \
-    apk del build-dependencies && \
-    rm -rf /var/cache/apk/*
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 RUN echo "==> Adding DynDNS Changer..."
 ADD dyndns /dyndns

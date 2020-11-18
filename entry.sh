@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Add variables to DynDNS config
-if [ -z "$API_USER" ]
+if [ -z $API_USER ]
 then
       echo "Empty API_USER. Please set your CoreNetworks API user."
       exit 10
@@ -9,7 +9,7 @@ else
       sed -i "s/{{API_USER}}/$API_USER/g" /dyndns/config.ini
 fi
 
-if [ -z "$API_PASS" ]
+if [ -z $API_PASS ]
 then
       echo "Empty API_PASS. Please set your CoreNetworks API password."
       exit 11
@@ -17,7 +17,7 @@ else
       sed -i "s/{{API_PASS}}/$API_PASS/g" /dyndns/config.ini
 fi
 
-if [ -z "$ZONE" ]
+if [ -z $ZONE ]
 then
       echo "Empty ZONE. Please define your DNS zone (e.g. example.com)"
       exit 12
@@ -56,3 +56,6 @@ fi
 
 # Start cron
 /usr/sbin/crond -f -l 8
+
+# Execute DynDNS script
+python /dyndns/dyndns.py >> /var/log/dyndns_changes.log 2>&1

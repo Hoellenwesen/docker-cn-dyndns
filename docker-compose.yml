@@ -1,12 +1,12 @@
 version: '3.3'
 services:
   docker-dyndns-cn:
-    image: 'sweyer/docker-dyndns-cn:latest'
-    container-name: 'dyndns-changer'
+    image: sweyer/docker-dyndns-cn:latest
+    container_name: dyndns-changer
     restart: always
     environment:
-      - API_USER='username'
-      - API_PASS='password'
+      - API_USER=username
+      - API_PASS=password
       - TZ=Europe/Berlin
       - ZONE=example.com
       - SUB1=subdomain
