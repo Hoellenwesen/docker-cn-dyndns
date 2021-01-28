@@ -1,5 +1,5 @@
 FROM python:alpine
-LABEL maintainer="Sebastian Weyer"
+LABEL maintainer="Hoellenwesen"
 
 ENV API_USER ""
 ENV API_PASS ""
