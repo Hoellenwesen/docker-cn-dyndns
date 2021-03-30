@@ -58,4 +58,4 @@ fi
 /usr/sbin/crond -f -l 8
 
 # Execute DynDNS script
-python /dyndns/dyndns.py >> /var/log/dyndns_changes.log 2>&1
+cd /dyndns && python dyndns.py >> /var/log/dyndns_changes.log 2>&1
