@@ -14,7 +14,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 RUN echo "==> Adding DynDNS Changer..."
-ADD dyndns /dyndns
+ADD app /app
 
 RUN echo "==> Adding Crontab..."
 ADD crontab.txt /crontab.txt

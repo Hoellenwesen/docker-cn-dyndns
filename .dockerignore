@@ -1,0 +1,7 @@
+.devcontainer
+.vscode
+.venv
+*.env
+*.yml
+*.pyc
+*.md
