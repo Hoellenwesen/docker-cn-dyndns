@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python:alpine3.16
 LABEL maintainer="Hoellenwesen"
 
 ENV API_USER ""
