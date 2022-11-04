@@ -42,7 +42,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64, linux/arm64
           # Note: tags has to be all lower-case
-          tags: ghcr.io/hoellenwesen/dahuavto2mqtt:latest
+          tags: ghcr.io/hoellenwesen/docker-dyndns-cn:latest
           # build on feature branches, push only on master branch
           push: true
 
